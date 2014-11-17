@@ -12,9 +12,12 @@ public class YanivElgay066546110Servlet extends HttpServlet {
 		String circleArea = new String("Area of circle with radius "+radius+" is : "+area+" square-cm");
 		
 		int hypotenuse = 50;
-		int angle = 30;
-		double opposite = (Math.toRadians(angle)) * (hypotenuse);
-		String calcOpposite = new String("Length of opposite where angle B is "+angle+" degrees and hypotenuse length is "+hypotenuse+" cm is :"+opposite+" cm ");
+		double angleB;
+		float opposite;
+		
+		angleB = 30 * (Math.PI/180);
+		opposite = (float)(hypotenuse * Math.sin(angleB));
+		String calcOpposite = new String("Length of opposite where angle B is 30 degrees and hypotenuse length is "+hypotenuse+" cm is :"+opposite+" cm ");
 		
 		int base = 20;
 		int exp = 13;
