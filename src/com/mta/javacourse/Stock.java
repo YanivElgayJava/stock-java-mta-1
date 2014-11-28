@@ -40,7 +40,7 @@ public class Stock {
 	} 
 	
 	public String getHtmlDescription(){ 
-		String stockHtmlDetailsString = " <b> Stock symbol </b> : " +getSymbol()+ " <b> Bid </b> : " +getBid()+ "<b> Ask </b> :" +getAsk()+ "<b> date </b> :" +data.getDate()+ "/" +data.getMonth()+ "/" +data.getYear();
+		String stockHtmlDetailsString = " <b> Stock symbol </b> : " +getSymbol()+  "<b> Ask </b> :" +getAsk()+ " <b> Bid </b> : " +getBid()+ "<b> date </b> :" +data.getDate()+ "/" +data.getMonth()+ "/" +data.getYear();
 		return stockHtmlDetailsString;
 	}
 	
