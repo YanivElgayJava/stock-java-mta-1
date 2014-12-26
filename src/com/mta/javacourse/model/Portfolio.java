@@ -420,7 +420,7 @@ public class Portfolio {
 
 		for(i = 0 ;i < portfolioSize; i++)
 		{
-			getHtmlPortfolio += stocks[i].getHtmlDescription() + "<br>";
+			getHtmlPortfolio += stocks[i].getHtmlDescription()+ " , <b>quantity</b>: " +stockStatus[i].getStockQuantity()+ "<br><br>";
 		}
 		getHtmlPortfolio += "<br>"+"Total Portfolio Value: "+getTotalValue()
 				+"$, "+"<br>"+"Total Stocks value:" + getStocksValue()
@@ -428,6 +428,10 @@ public class Portfolio {
 
 		return getHtmlPortfolio;
 	}
+	
+	
+
+		
 
 }
 
