@@ -428,10 +428,6 @@ public class Portfolio {
 
 		return getHtmlPortfolio;
 	}
-	
-	
-
-		
 
 }
 
