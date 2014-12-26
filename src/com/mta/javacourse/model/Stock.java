@@ -1,20 +1,21 @@
 package com.mta.javacourse.model;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * An instance of this class represents a Stock with all of variables.
  * @author Yaniv Elgay
  * @since 2014
- * date 11/12/2014
+ * date 22/12/2014
  */
 
 public class Stock {
 
-	private String symbol;
-	private float Ask;
-	private float Bid;
-	private java.util.Date data;
+	private String stockSymbol;
+	private float ask;
+	private float bid;
+	private Date date;
 
 	/**
 	 * copy constructor
@@ -22,7 +23,7 @@ public class Stock {
 	 */
 
 	public Stock(Stock stock){
-		this(stock.getSymbol(),stock.getAsk(),stock.getBid(),stock.getData());
+		this(stock.getStockSymbol(),stock.getAsk(),stock.getBid(),new Date(stock.getDate().getTime()));
 	}
 
 	/**
@@ -30,50 +31,54 @@ public class Stock {
 	 * @param stocks 
 	 */
 
-	public Stock(String stockSymbol1, float ask1, float bid1, Date date) {
-		if(stockSymbol1 != null)
+	public Stock(String stockSymbol, float ask, float bid,Date date ) {
+		if(stockSymbol != null)
 		{
-			setSymbol(stockSymbol1);
-			setAsk(ask1);
-			setBid(bid1);
-			setData(date);
+			setStockSymbol(stockSymbol);
+			setAsk(ask);
+			setBid(bid);
+			setDate(date);
+		}
+		else
+		{
+			System.out.println("There are not stocks to copy");
 		}
 	}
 
 	//getters:
 
-	public String getSymbol() {
-		return symbol;
+	public String getStockSymbol() {
+		return stockSymbol;
 	}
 
 	public float getAsk() {
-		return Ask;
+		return ask;
 	}
 
 	public float getBid() {
-		return Bid;
+		return bid;
 	}
 
-	public java.util.Date getData() {
-		return data;
+	public Date getDate() {
+		return date;
 	}
 
 	//setters:
 
-	public void setSymbol(String symbol) {
-		this.symbol = symbol;
+	public void setStockSymbol(String symbol) {
+		stockSymbol = symbol;
 	}
 
-	public void setAsk(float ask) {
-		Ask = ask;
+	public void setAsk(float inputAsk) {
+		ask = inputAsk;
 	}
 
-	public void setBid(float bid) {
-		Bid = bid;
+	public void setBid(float inputBid) {
+		bid = inputBid;
 	}
 
-	public void setData(java.util.Date data) {
-		this.data = data;
+	public void setDate(Date inputDate) {
+		date = inputDate;
 	} 
 
 	/**
@@ -83,7 +88,7 @@ public class Stock {
 	 */
 
 	public String getHtmlDescription(){ 
-		String stockHtmlDetailsString = " <b> Stock symbol </b> : " +getSymbol()+  "<b> Ask </b> :" +getAsk()+ " <b> Bid </b> : " +getBid()+ "<b> date </b> :" +data.getDate()+ "/" +data.getMonth()+ "/" +data.getYear();
+		String stockHtmlDetailsString = " <b> Stock symbol </b> : " +getStockSymbol()+  "<b> Ask </b> :" +getAsk()+ " <b> Bid </b> : " +getBid()+ "<b> date </b> :" +new SimpleDateFormat("dd-MM-yyyy").format(date);
 		return stockHtmlDetailsString;
 	}
 
