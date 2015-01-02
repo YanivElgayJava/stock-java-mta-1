@@ -12,37 +12,35 @@ import java.text.SimpleDateFormat;
 
 public class Stock {
 
-	private String stockSymbol;
-	private float ask;
-	private float bid;
-	private Date date;
+	protected String stockSymbol;
+	protected float ask;
+	protected float bid;
+	protected Date date;
 
 	/**
-	 * copy constructor
-	 * @param stocks 
+	 * constructor initialize members.
+	 * @param
 	 */
 
-	public Stock(Stock stock){
-		this(stock.getStockSymbol(),stock.getAsk(),stock.getBid(),new Date(stock.getDate().getTime()));
+	public Stock(){
+
+		stockSymbol = "";
+		ask = 0;
+		bid = 0;
+		date = new Date();
 	}
 
 	/**
-	 * constructor
+	 * copy constructor which input values to members.
 	 * @param stocks 
 	 */
 
-	public Stock(String stockSymbol, float ask, float bid,Date date ) {
-		if(stockSymbol != null)
-		{
-			setStockSymbol(stockSymbol);
-			setAsk(ask);
-			setBid(bid);
-			setDate(date);
-		}
-		else
-		{
-			System.out.println("There are not stocks to copy");
-		}
+	public Stock(Stock stock ) {
+		setStockSymbol(stock.getStockSymbol());
+		setAsk(stock.getAsk());
+		setBid(stock.getBid());
+		date = new Date();
+		setDate(new Date(stock.date.getTime()));
 	}
 
 	//getters:
