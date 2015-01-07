@@ -259,7 +259,7 @@ public class Portfolio {
 				stockStatus[i].stockQuantity = 0;
 				return true;
 			}
-			if (quantity == MAX_PORTFOLIO_SIZE || quantity > MAX_PORTFOLIO_SIZE || quantity < 0) {
+			if (quantity > stockStatus[i].stockQuantity || quantity < 0) {
 				System.out.println(symbol+" hasn't been sold - Not enough stocks to sell");
 				return false;
 			}
