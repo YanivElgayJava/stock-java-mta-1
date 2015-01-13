@@ -2,6 +2,11 @@ package com.mta.javacourse.model;
 
 import java.util.Date;
 
+import com.mta.javacourse.exception.BalanceException;
+import com.mta.javacourse.exception.PortfolioFullException;
+import com.mta.javacourse.exception.StockAlreadyExistsException;
+import com.mta.javacourse.exception.StockNotExistException;
+
 /**
  * An instance of this class represents a portfolio which include stocks.
  * @author Yaniv Elgay
@@ -103,21 +108,22 @@ public class Portfolio {
 	 *
 	 */
 
-	public void addStock(Stock stock){
+	public void addStock(Stock stock) throws StockAlreadyExistsException,PortfolioFullException{
 
 		i = 0;
-		while(stockStatus[i]!=null)
+		while(stockStatus[i] != null)
 		{
 			if(stock.getStockSymbol().equals(stockStatus[i].getStockSymbol()))
 			{
 				System.out.println(" You have already this stock "+stock.getStockSymbol());
-				return;
+				throw new StockAlreadyExistsException(stock.getStockSymbol());
 			}
 			i++;
 		}
 		if(portfolioSize >= MAX_PORTFOLIO_SIZE)
 		{
 			System.out.println(" Can't add new stock, portfolio can have only "+MAX_PORTFOLIO_SIZE+" stocks");
+			throw new PortfolioFullException();
 		}
 		else
 		{
@@ -132,7 +138,6 @@ public class Portfolio {
 			this.stockStatus[stockStatusSize] = stockStatus;
 			stockStatusSize++;
 			portfolioSize++;
-
 		}
 	}
 
@@ -141,7 +146,7 @@ public class Portfolio {
 	 * @param stockSymbol - remove the stock from stocks array.
 	 */
 
-	public boolean removeStock(String stockSymbol){
+	public void removeStock(String stockSymbol) throws StockNotExistException{
 
 		int i = 0;
 		boolean isFound = false;
@@ -150,14 +155,14 @@ public class Portfolio {
 		{
 			if (stockStatus[i].stockSymbol.equals(stockSymbol))
 			{
-				isSold = sellStock(stockSymbol, -1);
+				sellStock(stockSymbol, -1);
 				isFound = true;
 				break; 
 			}
 		}
 		if (isFound == false) {
 			System.out.println(stockSymbol+" hasn't been found");
-			return false;
+			throw new StockNotExistException(stockSymbol);
 		}
 		else{
 			if(isSold==true){
@@ -165,7 +170,7 @@ public class Portfolio {
 				for (; i < portfolioSize; i++)
 				{
 
-					if (stockStatus[i+1]==null)
+					if (stockStatus[i + 1]==null)
 					{
 						portfolioSize--;
 						stockStatusSize--;
@@ -173,7 +178,7 @@ public class Portfolio {
 					}
 					else
 					{
-						stockStatus[i] = stockStatus[i+1];
+						stockStatus[i] = stockStatus[i + 1];
 						stockStatus[i] = stockStatus[i + 1];
 					}
 				}
@@ -181,10 +186,8 @@ public class Portfolio {
 			else 
 			{
 				System.out.println(stockSymbol+" hasn't been sold");
-				return false;
 			}
 		}
-		return isFound;
 	}
 
 	/**
@@ -194,7 +197,7 @@ public class Portfolio {
 	 * @return boolean success/fail
 	 */
 
-	public boolean buyStock (String symbol,int quantity){
+	public void buyStock (String symbol,int quantity) throws BalanceException,StockAlreadyExistsException{
 
 		boolean Symbolfound = false;
 		int amount;
@@ -211,23 +214,22 @@ public class Portfolio {
 			if (quantity == -1) {
 				amount = (int) Math.floor((balance/stockStatus[i].ask));
 				balance = balance - amount*stockStatus[i].ask;
-				return true;
 			}
-			else{
+			else
+			{
 				if(stockStatus[i].ask*quantity > balance)
 				{
 					System.out.println("Not enough balance to complete purchase");
-					return false;
+					throw new BalanceException();
 				}
 				stockStatus[i].stockQuantity=stockStatus[i].stockQuantity+quantity;
 				balance = balance - stockStatus[i].ask*quantity;
-				return true;
 			}
 		}
 		else
 		{
 			System.out.println(symbol+" purchase has failed");
-			return false;
+			throw new StockAlreadyExistsException(symbol);
 		}
 	}
 
@@ -238,7 +240,7 @@ public class Portfolio {
 	 * @return boolean success/fail
 	 */
 
-	public boolean sellStock(String symbol,int quantity){
+	public void sellStock(String symbol,int quantity) throws StockNotExistException{
 
 		boolean symbolFound = false;
 		int i = 0;
@@ -252,27 +254,24 @@ public class Portfolio {
 			}	
 
 		}
-		if(symbolFound==true){
+		if(symbolFound == true){
 
 			if (quantity == -1) {
 				balance = balance + stockStatus[i].stockQuantity*stockStatus[i].bid;
 				stockStatus[i].stockQuantity = 0;
-				return true;
 			}
 			if (quantity > stockStatus[i].stockQuantity || quantity < 0) {
 				System.out.println(symbol+" hasn't been sold - Not enough stocks to sell");
-				return false;
 			}
 			else{
 				stockStatus[i].stockQuantity = stockStatus[i].stockQuantity - quantity;
 				balance = balance + stockStatus[i].bid*quantity;
-				return true;
 			}
 		}
 		else
 		{
 			System.out.println(symbol+" hasn't been sold");
-			return false;
+			throw new StockNotExistException(symbol);
 		}
 
 	}
