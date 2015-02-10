@@ -12,7 +12,7 @@ import com.mta.javacourse.model.Portfolio.ALGO_RECOMMENDATION;
 
 public class StockStatus extends Stock {
 
-	private ALGO_RECOMMENDATION recommendation;
+	public ALGO_RECOMMENDATION recommendation;
 	protected int stockQuantity;
 
 	/**
@@ -37,8 +37,6 @@ public class StockStatus extends Stock {
 		stockQuantity = stockStatus.getStockQuantity();
 	}
 
-	//getters:
-
 	public ALGO_RECOMMENDATION getRecommendation() {
 		return recommendation;
 	}
@@ -46,9 +44,7 @@ public class StockStatus extends Stock {
 	public int getStockQuantity() {
 		return stockQuantity;
 	}
-
-	//setters:
-
+	
 	public void setRecommendation(ALGO_RECOMMENDATION recommendation) {
 		this.recommendation = recommendation;
 	}
@@ -57,4 +53,7 @@ public class StockStatus extends Stock {
 		this.stockQuantity = stockQuantity;
 	}
 
+	public StockStatus(Stock stock) {
+		super(stock);
+	}
 }

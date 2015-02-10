@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 public class Stock {
 
-	protected String stockSymbol;
+	public String stockSymbol;
 	protected float ask;
 	protected float bid;
 	protected Date date;
@@ -35,7 +35,7 @@ public class Stock {
 	 * @param stocks 
 	 */
 
-	public Stock(Stock stock ) {
+	public Stock(Stock stock) {
 		setStockSymbol(stock.getStockSymbol());
 		setAsk(stock.getAsk());
 		setBid(stock.getBid());
